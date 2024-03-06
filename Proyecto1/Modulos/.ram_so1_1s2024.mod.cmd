@@ -1,0 +1,1 @@
+savedcmd_/home/angel/Documentos/GitHub/SO1_201901055/Proyecto1/Modulos/ram_so1_1s2024.mod := printf '%s\n'   ram_so1_1s2024.o | awk '!x[$$0]++ { print("/home/angel/Documentos/GitHub/SO1_201901055/Proyecto1/Modulos/"$$0) }' > /home/angel/Documentos/GitHub/SO1_201901055/Proyecto1/Modulos/ram_so1_1s2024.mod

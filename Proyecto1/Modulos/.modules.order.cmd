@@ -1,0 +1,1 @@
+savedcmd_/home/angel/Documentos/GitHub/SO1_201901055/Proyecto1/Modulos/modules.order := {   echo /home/angel/Documentos/GitHub/SO1_201901055/Proyecto1/Modulos/ram_so1_1s2024.o;   echo /home/angel/Documentos/GitHub/SO1_201901055/Proyecto1/Modulos/cpu_so1_1s2024.o; :; } > /home/angel/Documentos/GitHub/SO1_201901055/Proyecto1/Modulos/modules.order
