@@ -61,9 +61,22 @@ clean:
 
 
 Comandos
+sudo insmod ram_so1_1s2024.ko
+sudo insmod cpu_so1_1s2024.ko
+
 sudo insmod /home/angel/Documentos/GitHub/SO1_201901055/Proyecto1/Modulos/ram_so1_1s2024.ko
 sudo insmod /home/angel/Documentos/GitHub/SO1_201901055/Proyecto1/Modulos/cpu_so1_1s2024.ko
 
 lsmod
 
 sudo dmesg | grep -E 'cpu_so1_1s2024'
+
+
+docker ps 
+docker ps -a 
+docker build -t back_go .
+
+docker run --name backend_container backend
+
+docker stop [ID]
+docker rm [ID]

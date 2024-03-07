@@ -1,1 +1,1 @@
-savedcmd_/home/angel/Documentos/GitHub/SO1_201901055/Proyecto1/Modulos/Module.symvers :=  scripts/mod/modpost -m -a      -o /home/angel/Documentos/GitHub/SO1_201901055/Proyecto1/Modulos/Module.symvers -T /home/angel/Documentos/GitHub/SO1_201901055/Proyecto1/Modulos/modules.order -i Module.symvers -e 
+savedcmd_/home/angel/Documents/SO1_201901055/Proyecto1/Modulos/Module.symvers :=  scripts/mod/modpost -m -a      -o /home/angel/Documents/SO1_201901055/Proyecto1/Modulos/Module.symvers -T /home/angel/Documents/SO1_201901055/Proyecto1/Modulos/modules.order -i Module.symvers -e 

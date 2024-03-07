@@ -33,21 +33,23 @@ MODULE_INFO(retpoline, "Y");
 
 
 
-static const char ____versions[]
-__used __section("__versions") =
-	"\x10\x00\x00\x00\x7e\x3a\x2c\x12"
-	"_printk\0"
-	"\x1c\x00\x00\x00\xca\x39\x82\x5b"
-	"__x86_return_thunk\0\0"
-	"\x14\x00\x00\x00\xbb\x6d\xfb\xbd"
-	"__fentry__\0\0"
-	"\x14\x00\x00\x00\x4e\x48\x78\x68"
-	"init_task\0\0\0"
-	"\x18\x00\x00\x00\x86\x05\x44\xe7"
-	"module_layout\0\0\0"
-	"\x00\x00\x00\x00\x00\x00\x00\x00";
+static const struct modversion_info ____versions[]
+__used __section("__versions") = {
+	{ 0x49c1677a, "single_open" },
+	{ 0xcae33d98, "init_task" },
+	{ 0x73f5cdba, "seq_printf" },
+	{ 0xd7791eaf, "remove_proc_entry" },
+	{ 0xdae0ef21, "seq_read" },
+	{ 0xf76784d5, "seq_lseek" },
+	{ 0xd2a93da3, "single_release" },
+	{ 0xbdfb6dbb, "__fentry__" },
+	{ 0xf43803e8, "proc_create" },
+	{ 0x122c3a7e, "_printk" },
+	{ 0x5b8239ca, "__x86_return_thunk" },
+	{ 0x6ab589bc, "module_layout" },
+};
 
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "FB6F9FDBF0744327AF2FBE7");
+MODULE_INFO(srcversion, "99E8A8B006C2B1B4E63233B");
