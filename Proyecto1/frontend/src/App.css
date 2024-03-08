@@ -1,0 +1,50 @@
+.App {
+  text-align: center;
+}
+
+
+.App-header {
+  background-color: #282c34;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  font-size: calc(20px + 2vmin);
+  color: white;
+}
+
+.contenedor {
+  display: flex;
+  justify-content: space-between; 
+  
+}
+
+.centro {
+  margin: 0 auto; 
+}
+
+
+.menu {
+  background-color: #f0f0f0;
+  padding: 10px;
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu ul li {
+  display: inline-block;
+  margin-right: 3%; 
+}
+
+.menu ul li:last-child {
+  margin-right: 0;
+}
+
+.menu ul li a {
+  text-decoration: none;
+  color: #333;
+}
