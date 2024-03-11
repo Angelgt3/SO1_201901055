@@ -1,14 +1,17 @@
-package Backend
+package main
 
 import (
-	"fmt"
-	"net/http"
+    "fmt"
+    "net/http"
+    "Backend/Routes"
+    "Backend/Database"
 )
 
 func main() {
-	http.HandleFunc("/datos/cpu", CPUDatosHandler)
-	http.HandleFunc("/datos/ram", RAMDatosHandler)
+    Database.InitDB()
 
-	fmt.Println("Servidor escuchando en http://localhost:8080")
-	http.ListenAndServe(":8080", nil)
+    Routes.SetupRoutes()
+
+    fmt.Println("Servidor iniciado. Escuchando en el puerto 8080")
+    http.ListenAndServe("0.0.0.0:8080", nil)
 }

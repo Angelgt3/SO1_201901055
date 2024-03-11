@@ -3,8 +3,8 @@
 #include <linux/init.h>
 #include <linux/proc_fs.h>
 #include <linux/mm.h>
+#include <linux/sysinfo.h> // Se agrega esta librería
 #include <linux/seq_file.h>
-#include <linux/fs.h>
 
 #define PROC_FILENAME "ram_so1_1s2024"
 

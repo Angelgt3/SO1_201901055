@@ -1,0 +1,15 @@
+CREATE SCHEMA IF NOT EXISTS proyecto1;
+
+USE proyecto1;
+
+CREATE TABLE IF NOT EXISTS proyecto1.RAM (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    libre INT NOT NULL,
+    ocupada INT NOT NULL,
+);
+
+CREATE TABLE IF NOT EXISTS proyecto1.CPU (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    libre INT NOT NULL,
+    ocupada INT NOT NULL,
+);

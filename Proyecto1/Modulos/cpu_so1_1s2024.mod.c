@@ -36,7 +36,7 @@ MODULE_INFO(retpoline, "Y");
 static const struct modversion_info ____versions[]
 __used __section("__versions") = {
 	{ 0x49c1677a, "single_open" },
-	{ 0xcae33d98, "init_task" },
+	{ 0x533ff826, "init_task" },
 	{ 0x73f5cdba, "seq_printf" },
 	{ 0xd7791eaf, "remove_proc_entry" },
 	{ 0xdae0ef21, "seq_read" },
@@ -52,4 +52,4 @@ __used __section("__versions") = {
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "99E8A8B006C2B1B4E63233B");
+MODULE_INFO(srcversion, "51ED6970C18FA558DDBEF2A");

@@ -1,4 +1,4 @@
-package Backend
+package Handlers
 
 import (
 	"encoding/json"

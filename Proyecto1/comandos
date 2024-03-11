@@ -1,0 +1,20 @@
+Comandos
+sudo insmod ram_so1_1s2024.ko
+sudo insmod cpu_so1_1s2024.ko
+
+sudo rmmod ram_so1_1s2024
+sudo rmmod cpu_so1_1s2024
+
+lsmod
+
+sudo dmesg | grep -E 'cpu_so1_1s2024'
+
+
+docker ps 
+docker ps -a 
+docker build -t backend .
+
+docker run -p 2024:2024 clase1_alpine1
+
+docker stop [ID]
+docker rm [ID]

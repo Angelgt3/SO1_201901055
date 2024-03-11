@@ -2,8 +2,10 @@
 #include <linux/kernel.h>
 #include <linux/init.h>
 #include <linux/proc_fs.h>
-#include <linux/seq_file.h>  // Incluir el encabezado para las funciones seq_file
+#include <linux/seq_file.h>
 #include <linux/fs.h>
+#include <linux/sched.h> 
+#include <linux/sched/signal.h> 
 
 #define PROC_FILENAME "cpu_so1_1s2024"
 
@@ -23,11 +25,11 @@ static int cpu_proc_open(struct inode *inode, struct file *file) {
     return single_open(file, cpu_proc_show, NULL);
 }
 
-static const struct proc_ops cpu_proc_fops = {  // Utilizar el tipo de estructura correcto
-    .proc_open    = cpu_proc_open,
-    .proc_read    = seq_read,
-    .proc_lseek   = seq_lseek,
-    .proc_release = single_release,
+static const struct proc_ops cpu_proc_fops = {
+    .proc_open   = cpu_proc_open,
+    .proc_read   = seq_read,
+    .proc_lseek  = seq_lseek,
+    .proc_release= single_release,
 };
 
 static int __init cpu_module_init(void) {
