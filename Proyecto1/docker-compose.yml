@@ -1,12 +1,34 @@
 version: '3'
 
 services:
-  api:
-    build: ./api
+  database:
+      build:
+        context: ./Database
+      ports:
+        - "3306:3306"
+      environment:
+        MYSQL_ROOT_PASSWORD: 201901055
+      networks:
+        - mynet
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "80:80"
+    networks:
+      - mynet
+
+  backend:
+    build:
+      context: ./Backend
     ports:
       - "8080:8080"
     depends_on:
-      - mysql
+      - database
+    networks:
+      - mynet
 
-  mysql:
-    build: ./mysql
+networks:
+  mynet:
+    driver: bridge

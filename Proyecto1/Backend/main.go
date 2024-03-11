@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-    Database.InitDB()
+    Database.ConexionMysql()
 
     Routes.SetupRoutes()
 
