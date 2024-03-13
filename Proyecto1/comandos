@@ -18,3 +18,17 @@ docker run -p 2024:2024 clase1_alpine1
 
 docker stop [ID]
 docker rm [ID]
+
+## 
+Comandos de instalacion
+##instalar docker
+
+##instalar docker compose
+sudo apt install docker-compose
+sudo usermod -aG docker $USER
+--se tiene que reinciar 
+
+##instalar gcc
+sudo apt install gcc-12
+##instalar make
+sudo apt install make

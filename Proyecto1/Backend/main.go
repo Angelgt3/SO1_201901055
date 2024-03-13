@@ -5,6 +5,8 @@ import (
     "net/http"
     "Backend/Routes"
     "Backend/Database"
+    "Backend/Handlers"
+    "github.com/rs/cors"
 )
 
 func main() {
@@ -12,6 +14,17 @@ func main() {
 
     Routes.SetupRoutes()
 
+    go Handlers.ActulizarDatosRAM()
+    go Handlers.ActulizarDatosCPU()
+
+    c := cors.New(cors.Options{
+        AllowedOrigins: []string{"*"},
+        AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+        AllowedHeaders: []string{"Origin", "Content-Type", "Accept"},
+    })
+
+    handler := c.Handler(http.DefaultServeMux)
+
     fmt.Println("Servidor iniciado. Escuchando en el puerto 8080")
-    http.ListenAndServe("0.0.0.0:8080", nil)
+    http.ListenAndServe(":8080", handler)
 }

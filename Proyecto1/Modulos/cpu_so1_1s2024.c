@@ -48,4 +48,4 @@ module_exit(cpu_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Angel");
-MODULE_DESCRIPTION("Kernel module to obtain CPU and process information");
+MODULE_DESCRIPTION("Module CPU");

@@ -3,7 +3,7 @@
 #include <linux/init.h>
 #include <linux/proc_fs.h>
 #include <linux/mm.h>
-#include <linux/sysinfo.h> // Se agrega esta librería
+#include <linux/sysinfo.h>
 #include <linux/seq_file.h>
 
 #define PROC_FILENAME "ram_so1_1s2024"
@@ -43,4 +43,4 @@ module_exit(ram_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Angel");
-MODULE_DESCRIPTION("A simple RAM info kernel module");
+MODULE_DESCRIPTION("Module RAM");
