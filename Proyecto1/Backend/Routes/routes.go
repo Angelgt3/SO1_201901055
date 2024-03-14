@@ -7,6 +7,8 @@ import (
 
 func SetupRoutes() {
     http.HandleFunc("/", Handlers.HelloHandler)
-    http.HandleFunc("/ram", Handlers.RAMDatosHandler)
-    http.HandleFunc("/cpu", Handlers.CPUDatosHandler)
+    http.HandleFunc("/ram", Handlers.RAMDatosActual)
+    http.HandleFunc("/cpu", Handlers.CPUDatosActual)
+    http.HandleFunc("/historico/cpu", Handlers.CPUDatosHistorico)
+    http.HandleFunc("/historico/ram", Handlers.RAMDatosHistorico)
 }

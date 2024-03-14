@@ -14,8 +14,8 @@ func main() {
 
     Routes.SetupRoutes()
 
-    go Handlers.ActulizarDatosRAM()
-    go Handlers.ActulizarDatosCPU()
+    go Handlers.ActualizarDatosRAM()
+    go Handlers.ActualizarDatosCPU()
 
     c := cors.New(cors.Options{
         AllowedOrigins: []string{"*"},

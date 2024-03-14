@@ -6,7 +6,6 @@ import (
 	"net/http"
 )
 
-// Esta estructura representa los datos de la CPU.
 type CPUData struct {
 	TotalCPU    int     `json:"total_cpu"`
 	UsedCPU     int     `json:"used_cpu"`
@@ -15,7 +14,7 @@ type CPUData struct {
 	FreeCPUPct  float64 `json:"free_cpu_pct"`
 }
 
-func CPUDatosHandler(w http.ResponseWriter, r *http.Request) {
+func CPUDatosActual(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
 		return
