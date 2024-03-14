@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'chart.js/auto';
+import './MonitoreoTiempoReal.css';
 
 const MonitoreoTiempoReal = () => {
   const GraficaRAM = useRef(null);
@@ -38,7 +39,7 @@ const MonitoreoTiempoReal = () => {
 
     const fetchDataPeriodically = () => {
       fetchRAMData();
-      //fetchCPUData();
+      fetchCPUData();
     };
 
     const intervalId = setInterval(fetchDataPeriodically, 5000);

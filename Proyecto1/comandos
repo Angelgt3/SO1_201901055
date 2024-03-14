@@ -27,7 +27,6 @@ Comandos de instalacion
 sudo apt install docker-compose
 sudo usermod -aG docker $USER
 --se tiene que reinciar 
-
 ##instalar gcc
 sudo apt install gcc-12
 ##instalar make

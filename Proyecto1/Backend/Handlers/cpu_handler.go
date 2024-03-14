@@ -3,37 +3,16 @@ package Handlers
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"os"
-	"time"
 	"net/http"
 )
 
-type ModuleData struct {
-	Name  string `json:"name"`
-	Data  string `json:"data"`
-	Error string `json:"error,omitempty"`
-}
-
-func leerDatosCPU(canal chan ModuleData) {
-	for {
-		archivo, err := os.Open("/proc/cpu_so1_1s2024")
-		if err != nil {
-			canal <- ModuleData{Name: "CPU", Error: fmt.Sprintf("Error al abrir el archivo del módulo: %v", err)}
-			continue
-		}
-		defer archivo.Close()
-
-		datos, err := ioutil.ReadAll(archivo)
-		if err != nil {
-			canal <- ModuleData{Name: "CPU", Error: fmt.Sprintf("Error al leer el archivo del módulo: %v", err)}
-			continue
-		}
-
-		canal <- ModuleData{Name: "CPU", Data: string(datos)}
-
-		time.Sleep(5 * time.Second)
-	}
+// Esta estructura representa los datos de la CPU.
+type CPUData struct {
+	TotalCPU    int     `json:"total_cpu"`
+	UsedCPU     int     `json:"used_cpu"`
+	FreeCPU     int     `json:"free_cpu"`
+	UsedCPUPct  float64 `json:"used_cpu_pct"`
+	FreeCPUPct  float64 `json:"free_cpu_pct"`
 }
 
 func CPUDatosHandler(w http.ResponseWriter, r *http.Request) {
@@ -42,17 +21,15 @@ func CPUDatosHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	canalCPU := make(chan ModuleData)
-	go leerDatosCPU(canalCPU)
+	cpuInfo := <-ChanDatosCPU
 
-	moduleData := <-canalCPU
-
-	jsonData, err := json.Marshal(moduleData)
+	jsonData, err := json.Marshal(cpuInfo)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Error al serializar datos JSON: %v", err), http.StatusInternalServerError)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 	w.Write(jsonData)
 }
