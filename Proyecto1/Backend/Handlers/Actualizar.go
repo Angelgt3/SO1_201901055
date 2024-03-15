@@ -19,26 +19,24 @@ func ActualizarDatosRAM() {
         archivo, err := os.Open("/proc/ram_so1_1s2024")
         if err != nil {
             fmt.Println("Error al abrir archivo de RAM:", err)
-            return
+            continue
         }
         defer archivo.Close()
         datos, err := ioutil.ReadAll(archivo)
         if err != nil {
             fmt.Println("Error al leer archivo de RAM:", err)
-            return
+            continue
         }
         ramData := procesarDatosRAM(string(datos))
         ChanDatosRAM <- ramData
 
-
-        //insertar en la tabla 
-        err = Database.InsertDataRAM(ramData.FreeRAMPct, ramData.UsedRAMPct)
-        if err != nil {
-            fmt.Println("Error al actualizar datos de RAM:", err)
-            return
+        var errDB error
+        errDB = Database.InsertDataRAM(ramData.FreeRAMPct, ramData.UsedRAMPct)
+        if errDB != nil {
+            fmt.Println("Error al actualizar datos de RAM:", errDB)
         }
 
-        time.Sleep(5 * time.Second)
+        time.Sleep(2 * time.Second)
     }
 }
 
@@ -47,28 +45,28 @@ func ActualizarDatosCPU() {
         archivo, err := os.Open("/proc/cpu_so1_1s2024")
         if err != nil {
             fmt.Println("Error al abrir archivo de CPU:", err)
-            return
+            continue
         }
         defer archivo.Close()
         datos, err := ioutil.ReadAll(archivo)
         if err != nil {
             fmt.Println("Error al leer archivo de CPU:", err)
-            return
+            continue
         }
         
         cpuData := procesarDatosCPU(string(datos))
         ChanDatosCPU <- cpuData
         
-        //insertar en la tabla 
-        err = Database.InsertDataCPU(float64(cpuData.FreeCPUPct), float64(cpuData.UsedCPUPct))
-        if err != nil {
-            fmt.Println("Error al actualizar datos de RAM:", err)
-            return
+        var errDB error
+        errDB = Database.InsertDataCPU(float64(cpuData.FreeCPUPct), float64(cpuData.UsedCPUPct))
+        if errDB != nil {
+            fmt.Println("Error al actualizar datos de CPU:", errDB)
         }
 
-        time.Sleep(5 * time.Second)
+        time.Sleep(2 * time.Second)
     }
 }
+
 
 func procesarDatosCPU(cpuInfoStr string) CPUData {
     lines := strings.Split(cpuInfoStr, "\n")

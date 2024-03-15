@@ -90,7 +90,7 @@ func GetDataCPU() ([]byte, error) {
     }
     defer db.Close()
 
-    query := "SELECT * FROM proyecto1.CPU"
+    query := "SELECT * FROM proyecto1.CPU ORDER BY id DESC LIMIT 10"
     rows, err := db.Query(query)
     if err != nil {
         return nil, fmt.Errorf("error al obtener datos de la tabla CPU: %v", err)
@@ -132,7 +132,7 @@ func GetDataRAM() ([]byte, error) {
     }
     defer db.Close()
 
-    query := "SELECT * FROM proyecto1.RAM"
+    query := "SELECT * FROM proyecto1.RAM ORDER BY id DESC LIMIT 10"
     rows, err := db.Query(query)
     if err != nil {
         return nil, fmt.Errorf("error al obtener datos de la tabla RAM: %v", err)

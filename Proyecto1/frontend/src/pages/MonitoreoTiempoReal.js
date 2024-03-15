@@ -42,7 +42,7 @@ const MonitoreoTiempoReal = () => {
       fetchCPUData();
     };
 
-    const intervalId = setInterval(fetchDataPeriodically, 5000);
+    const intervalId = setInterval(fetchDataPeriodically, 2000);
 
     return () => clearInterval(intervalId);
   }, []);
