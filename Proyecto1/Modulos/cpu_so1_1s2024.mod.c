@@ -40,8 +40,9 @@ __used __section("__versions") = {
 	{ 0xdf907ab3, "kernel_read" },
 	{ 0x73f5cdba, "seq_printf" },
 	{ 0x1737cbea, "filp_close" },
-	{ 0x87a21cb3, "__ubsan_handle_out_of_bounds" },
+	{ 0x533ff826, "init_task" },
 	{ 0xf0fdf6cb, "__stack_chk_fail" },
+	{ 0x87a21cb3, "__ubsan_handle_out_of_bounds" },
 	{ 0xd7791eaf, "remove_proc_entry" },
 	{ 0xdae0ef21, "seq_read" },
 	{ 0xf76784d5, "seq_lseek" },
@@ -56,4 +57,4 @@ __used __section("__versions") = {
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "8C6027DC0410429257B6EA3");
+MODULE_INFO(srcversion, "B0DE0D776782B45150D29EC");

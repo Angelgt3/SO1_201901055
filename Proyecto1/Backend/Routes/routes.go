@@ -11,4 +11,5 @@ func SetupRoutes() {
     http.HandleFunc("/cpu", Handlers.CPUDatosActual)
     http.HandleFunc("/historico/cpu", Handlers.CPUDatosHistorico)
     http.HandleFunc("/historico/ram", Handlers.RAMDatosHistorico)
+    http.HandleFunc("/arbol", Handlers.DatosArbol)
 }

@@ -4,6 +4,8 @@
 #include <linux/proc_fs.h>
 #include <linux/fs.h>
 #include <linux/seq_file.h>
+#include <linux/sched.h>
+#include <linux/sched/signal.h>
 
 #define PROC_FILENAME "cpu_so1_1s2024"
 
@@ -12,17 +14,30 @@ static int cpu_proc_show(struct seq_file *m, void *v) {
     struct file *fp;
     ssize_t n;
 
-    // Abrir el archivo de /proc/stat
     fp = filp_open("/proc/stat", O_RDONLY, 0);
 
-    // Leer la salida de /proc/stat
-    n = kernel_read(fp, buffer, sizeof(buffer) - 1, &fp->f_pos);
+    if (fp != NULL) {
+        n = kernel_read(fp, buffer, sizeof(buffer) - 1, &fp->f_pos);
+        buffer[n] = '\0';
 
-    buffer[n] = '\0';
+        seq_printf(m, "CPU Info:\n%s\n", buffer);
+        filp_close(fp, NULL);
+    } else {
+        seq_printf(m, "Error: Unable to open /proc/stat\n");
+    }
 
-    // Escribir la salida en el archivo /proc
-    seq_printf(m, "%s", buffer);
-    filp_close(fp, NULL);
+    struct task_struct *task;
+    struct task_struct *child;
+    for_each_process(task) {
+        seq_printf(m, "PID: %d, Name: %s\n", task->pid, task->comm);
+        
+        if (!list_empty(&task->children)) {
+            seq_printf(m, "Children:\n");
+            list_for_each_entry(child, &task->children, sibling) {
+                seq_printf(m, "  PID: %d, Name: %s\n", child->pid, child->comm);
+            }
+        }
+    }
     
     return 0;
 }
