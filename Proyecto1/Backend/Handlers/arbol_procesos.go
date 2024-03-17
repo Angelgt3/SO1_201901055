@@ -16,11 +16,6 @@ type Proceso struct {
 }
 
 func DatosArbol(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
-		return
-	}
-
 	arbolData := procesarDatosArbol()
 
 	jsonData, err := json.Marshal(arbolData)

@@ -117,31 +117,12 @@ func updateProcessState(state string) {
 }
 
 func StatusProcess(w http.ResponseWriter, r *http.Request) {
-	pidStr := r.URL.Query().Get("pid")
-	if pidStr == "" {
-		http.Error(w, "Se requiere el parámetro 'pid'", http.StatusBadRequest)
-		return
-	}
-
-	pid, err := strconv.Atoi(pidStr)
+	jsonData, err := json.Marshal(process)
 	if err != nil {
-		http.Error(w, "El parámetro 'pid' debe ser un número entero", http.StatusBadRequest)
+		http.Error(w,"Error al codificar el proceso en JSON",http.StatusInternalServerError)
 		return
 	}
-
-	for _, process := range processes {
-		if process.PID == pid {
-			jsonData, err := json.Marshal(process)
-			if err != nil {
-				http.Error(w, "Error al codificar el proceso en JSON", http.StatusInternalServerError)
-				return
-			}
-
-			w.Header().Set("Content-Type", "application/json")
-			w.WriteHeader(http.StatusOK)
-			w.Write(jsonData)
-			return
-		}
-	}
-	http.Error(w, fmt.Sprintf("No se encontró ningún proceso con PID %d", pid), http.StatusNotFound)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonData)
 }

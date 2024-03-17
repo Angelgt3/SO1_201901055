@@ -2,9 +2,13 @@ FROM node:16-alpine as build
 
 WORKDIR /app
 
-COPY . .
+COPY package.json package-lock.json ./
 
 RUN npm install
+
+RUN npm install vis-network
+
+COPY . .
 
 RUN npm run build --prod
 
