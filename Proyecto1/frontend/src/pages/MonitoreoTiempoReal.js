@@ -53,8 +53,8 @@ const MonitoreoTiempoReal = () => {
       datasets: [{
         data: [ramData.usedPct, ramData.freePct],
         backgroundColor: [
-          'rgb(255, 99, 132)',
-          'rgb(75, 192, 192)'
+          'rgb(255, 52, 52)',
+          'rgb(108, 255, 98)'
         ]
       }]
     };
@@ -64,8 +64,8 @@ const MonitoreoTiempoReal = () => {
       datasets: [{
         data: [cpuData.usedPct, cpuData.freePct],
         backgroundColor: [
-          'rgb(255, 99, 132)',
-          'rgb(75, 192, 192)'
+          'rgb(255, 52, 52)',
+          'rgb(108, 255, 98)'
         ]
       }]
     };

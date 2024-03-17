@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Chart from 'chart.js/auto';
+import { Tree } from 'react-d3-tree';
 
 const ArbolDeProcesos = () => {
   const [arbolData, setArbolData] = useState(null);
@@ -21,41 +21,45 @@ const ArbolDeProcesos = () => {
     obtenerDatosArbol();
   }, []);
 
-  useEffect(() => {
-    if (arbolData) {
-      const nombres = arbolData.map(proceso => proceso.Name);
-      const ids = arbolData.map(proceso => proceso.PID);
-
-      const ctx = document.getElementById('arbolChart');
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: nombres,
-          datasets: [{
-            label: 'PID',
-            data: ids,
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-    }
-  }, [arbolData]);
-
   return (
-    <div>
-      <h1>Arbol de Procesos</h1>
-      <canvas id="arbolChart" width="400" height="200"></canvas>
+    <div style={{ width: '100%', height: '500px' }}>
+      {arbolData && (
+        <Tree
+          data={construirArbol(arbolData)}
+          orientation="vertical"
+          translate={{ x: 100, y: 50 }}
+          separation={{ siblings: 2, nonSiblings: 2 }}
+        />
+      )}
     </div>
   );
 }
+
+const construirArbol = (data) => {
+  const root = {
+    name: data.Name,
+    attributes: {
+      PID: data.PID
+    },
+    children: []
+  };
+  construirHijos(root, data.Hijos);
+  return root;
+};
+
+const construirHijos = (padre, hijos) => {
+  if (!hijos || hijos.length === 0) return;
+  hijos.forEach(hijo => {
+    const nodoHijo = {
+      name: hijo.Name,
+      attributes: {
+        PID: hijo.PID
+      },
+      children: []
+    };
+    padre.children.push(nodoHijo);
+    construirHijos(nodoHijo, hijo.Hijos);
+  });
+};
 
 export default ArbolDeProcesos;

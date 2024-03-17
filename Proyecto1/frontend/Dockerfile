@@ -8,6 +8,8 @@ RUN npm install
 
 RUN npm install vis-network
 
+RUN npm install react-d3-tree
+
 COPY . .
 
 RUN npm run build --prod

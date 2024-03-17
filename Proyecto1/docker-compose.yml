@@ -9,10 +9,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 201901055
     volumes:
-      - base_mysql:/var/lib/mysql 
+      - base_mysql:/var/lib/mysql
     networks:
       - mynet
-    
 
   frontend:
     build:
@@ -35,6 +34,13 @@ services:
       DB_HOST: database
       DB_PORT: 3306
       DB_NAME: proyecto1
+    privileged: true
+    pid: host
+    restart: always
+    volumes:
+      - type: bind
+        source: /proc
+        target: /proc
     networks:
       - mynet
 
