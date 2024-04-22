@@ -1,0 +1,11 @@
+/home/angel/Documentos/GitHub/SO1_201901055/Proyecto2/Rust/cliente/target/debug/deps/libsocket2-f29db3206a54ad71.rmeta: /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/lib.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/sockaddr.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/socket.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/sockref.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/sys/unix.rs
+
+/home/angel/Documentos/GitHub/SO1_201901055/Proyecto2/Rust/cliente/target/debug/deps/libsocket2-f29db3206a54ad71.rlib: /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/lib.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/sockaddr.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/socket.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/sockref.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/sys/unix.rs
+
+/home/angel/Documentos/GitHub/SO1_201901055/Proyecto2/Rust/cliente/target/debug/deps/socket2-f29db3206a54ad71.d: /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/lib.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/sockaddr.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/socket.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/sockref.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/sys/unix.rs
+
+/home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/lib.rs:
+/home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/sockaddr.rs:
+/home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/socket.rs:
+/home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/sockref.rs:
+/home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/socket2-0.5.6/src/sys/unix.rs:

@@ -1,0 +1,18 @@
+Proecto2
+    GRCP
+        -cliente
+            --protoCliente 
+                ---cliente.proto
+            --go.mod
+            --go.sum
+            --dockerfile
+            --main.go 
+        -Servidor
+            --protoServidor
+                ---servidor.proto
+            --go.mod
+            --go.sum
+            --dockerfile
+            --main.go 
+    Trafico
+    Readme

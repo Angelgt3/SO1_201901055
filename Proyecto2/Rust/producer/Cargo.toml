@@ -1,0 +1,17 @@
+[package]
+name = "cliente"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+reqwest = { version = "0.11", features = ["blocking", "json"] }
+serde = { version = "1", features = ["derive"] }
+tokio = { version = "1", features = ["full"] }
+tonic = "0.5"
+
+[build]
+build = "tonic-build --out-dir=./proto_servidor proto_servidor/*.proto"
+
+[[bin]]
+name = "cliente"
+path = "main.rs"

@@ -1,0 +1,9 @@
+/home/angel/Documentos/GitHub/SO1_201901055/Proyecto2/Rust/producer/target/debug/deps/librand_chacha-c8294ee9a62b7ac1.rmeta: /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_chacha-0.3.1/src/lib.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_chacha-0.3.1/src/chacha.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_chacha-0.3.1/src/guts.rs
+
+/home/angel/Documentos/GitHub/SO1_201901055/Proyecto2/Rust/producer/target/debug/deps/librand_chacha-c8294ee9a62b7ac1.rlib: /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_chacha-0.3.1/src/lib.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_chacha-0.3.1/src/chacha.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_chacha-0.3.1/src/guts.rs
+
+/home/angel/Documentos/GitHub/SO1_201901055/Proyecto2/Rust/producer/target/debug/deps/rand_chacha-c8294ee9a62b7ac1.d: /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_chacha-0.3.1/src/lib.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_chacha-0.3.1/src/chacha.rs /home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_chacha-0.3.1/src/guts.rs
+
+/home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_chacha-0.3.1/src/lib.rs:
+/home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_chacha-0.3.1/src/chacha.rs:
+/home/angel/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rand_chacha-0.3.1/src/guts.rs:
