@@ -4,6 +4,7 @@ go 1.22.2
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
+	github.com/confluentinc/confluent-kafka-go v1.9.2 // indirect
 	github.com/gofiber/fiber/v2 v2.52.4 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/klauspost/compress v1.17.0 // indirect

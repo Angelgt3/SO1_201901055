@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deployment1  # Nombre del Deployment
-  namespace: proyecto2  # Espacio de nombres donde se desplegará el Deployment
+  name: gdeployment_grpc
+  namespace: so1  
 spec:
   selector:  
     matchLabels:
@@ -14,16 +14,16 @@ spec:
         role: deployment1 
     spec:
       containers:  
-      - name: contenedor1 
-        image: cliente_grcp 
+      - name: cliente_grcp 
+        image: angegt3/cliente_grcp 
         ports:  
-        - containerPort: 3300  
-      - name: contenedor2  
-        image: servidor_grcp  
+        - containerPort: 3000  
+      - name: servidor_grcp  
+        image: angegt3/servidor_grcp  
         ports: 
-        - containerPort: 50051 
+        - containerPort: 3001
 
-# Definición del Service
+
 ---
 apiVersion: v1
 kind: Service
@@ -31,7 +31,7 @@ metadata:
   name: service-proyecto2 
 spec:
   ports: 
-  - port: 3300  
-    targetPort: 3300  # Puerto al que se redirige el tráfico
+  - port: 3000  
+    targetPort: 3000  
   selector:  
     role: grpc-ruta  
