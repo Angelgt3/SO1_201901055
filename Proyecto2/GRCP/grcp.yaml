@@ -28,8 +28,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: service-proyecto2 
+  name: service-grcp 
+  namespace: so1
 spec:
+  type: LoadBalancer
   ports: 
   - port: 3000  
     targetPort: 3000  
