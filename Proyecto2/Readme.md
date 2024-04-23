@@ -13,6 +13,10 @@ docker push angegt3/cliente_grcp
 docker tag servidor_grcp angegt3/servidor_grcp
 docker push angegt3/servidor_grcp
 
+docker build -t kafka-consumer .
+docker tag kafka-consumer angegt3/kafka-consumer
+docker push angegt3/kafka-consumer
+
 #GRPC
 protoc --go_out=. --go-grpc_out=. cliente.proto
 

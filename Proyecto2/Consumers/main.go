@@ -10,11 +10,21 @@ import (
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
+type Data struct {
+	Album  string
+	Year   string
+	Artist string
+	Ranked string
+}
+
 func main() {
-	c, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers": "my-cluster-kafka-0.my-cluster-kafka-brokers.kafka.svc:9092",
-		"group.id":          "mygroupid",
-		"auto.offset.reset": "earliest"})
+
+	conf := ReadConfig()
+	fmt.Println(conf)
+	conf["group.id"] = "mygroupid"
+	conf["auto.offset.reset"] = "earliest"
+
+	c, err := kafka.NewConsumer(&conf)
 
 	if err != nil {
 		fmt.Printf("Failed to create consumer: %s", err)
@@ -22,11 +32,7 @@ func main() {
 	}
 
 	topic := "mytopic"
-	err = c.SubscribeTopics([]string{topic}, nil)
-	if err != nil {
-		fmt.Printf("Failed to subscribe to topic: %s", err)
-		os.Exit(1)
-	}
+	c.SubscribeTopics([]string{topic}, nil)
 
 	sigchan := make(chan os.Signal, 1)
 	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
@@ -46,4 +52,13 @@ func main() {
 				*ev.TopicPartition.Topic, string(ev.Key), string(ev.Value))
 		}
 	}
+}
+
+func ReadConfig() kafka.ConfigMap {
+
+	m := make(map[string]kafka.ConfigValue)
+
+	m["bootstrap.servers"] = "kafka-service:9092"
+	return m
+
 }

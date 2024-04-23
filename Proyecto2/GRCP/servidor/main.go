@@ -24,12 +24,13 @@ const (
 var kafkaTopic = "mytopic"
 
 func produceToKafka(data string) error {
+
 	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": kafkaBroker})
 	if err != nil {
 		return err
 	}
 	defer p.Close()
-
+	fmt.Println("cree el producer")
 	deliveryChan := make(chan kafka.Event)
 
 	err = p.Produce(&kafka.Message{
