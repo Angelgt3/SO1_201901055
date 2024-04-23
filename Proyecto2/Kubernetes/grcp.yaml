@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gdeployment_grpc
+  name: deployment_grpc
   namespace: so1  
 spec:
   selector:  
@@ -14,11 +14,11 @@ spec:
         role: deployment1 
     spec:
       containers:  
-      - name: cliente_grcp 
+      - name: contenedor1
         image: angegt3/cliente_grcp 
         ports:  
         - containerPort: 3000  
-      - name: servidor_grcp  
+      - name: contenedor2
         image: angegt3/servidor_grcp  
         ports: 
         - containerPort: 3001
