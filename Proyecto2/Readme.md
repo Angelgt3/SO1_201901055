@@ -27,3 +27,5 @@ kubectl create namespace so1
 kubectl get pods -n so1
 kubectl get deployments -n so1
 kubectl get services -n so1
+
+kubectl expose deployment grpc-deployment --type=LoadBalancer --port 3000 -n so1

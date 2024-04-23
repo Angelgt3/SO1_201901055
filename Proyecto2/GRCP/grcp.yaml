@@ -31,9 +31,8 @@ metadata:
   name: service-grcp 
   namespace: so1
 spec:
-  type: LoadBalancer
   ports: 
-  - port: 3000  
-    targetPort: 3000  
+  - port: 3000
+    targetPort: 3002
   selector:  
     role: grpc-ruta  
