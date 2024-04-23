@@ -1,21 +1,18 @@
 #Comandos
 #Docker
 docker build -t cliente_grcp .
-docker run cliente_grcp
-
-docker build -t servidor_grcp .
-docker run servidor_grcp
-
-#DockerHub
 docker tag cliente_grcp angegt3/cliente_grcp
 docker push angegt3/cliente_grcp
 
+docker build -t servidor_grcp .
 docker tag servidor_grcp angegt3/servidor_grcp
 docker push angegt3/servidor_grcp
 
-docker build -t kafka-consumer .
-docker tag kafka-consumer angegt3/kafka-consumer
-docker push angegt3/kafka-consumer
+docker build -t golang-consumer .
+docker tag golang-consumer angegt3/golang-consumer
+docker push angegt3/golang-consumer
+
+
 
 #GRPC
 protoc --go_out=. --go-grpc_out=. cliente.proto

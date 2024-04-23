@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-deployment
+  namespace: so1  
+spec:
+  selector:  
+    matchLabels:
+      role: consumer
+  replicas: 1
+  template: 
+    metadata:
+      labels:
+        role: consumer
+    spec:
+      containers:  
+      - name: consumer-container
+        image: angegt3/golang-consumer
+        ports:  
+        - containerPort: 3002  
+          protocol: TCP  

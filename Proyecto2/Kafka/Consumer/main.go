@@ -11,20 +11,17 @@ import (
 )
 
 type Data struct {
-	Album  string
-	Year   string
-	Artist string
-	Ranked string
+	Album  string `json:"Album"`
+	Year   string `json:"Year"`
+	Artist string `json:"Artist"`
+	Ranked string `json:"Ranked"`
 }
 
 func main() {
-
-	conf := ReadConfig()
-	fmt.Println(conf)
-	conf["group.id"] = "mygroupid"
-	conf["auto.offset.reset"] = "earliest"
-
-	c, err := kafka.NewConsumer(&conf)
+	c, err := kafka.NewConsumer(&kafka.ConfigMap{
+		"bootstrap.servers": "my-cluster-kafka-0.my-cluster-kafka-brokers.kafka.svc:9092",
+		"group.id":          "mygroupid",
+		"auto.offset.reset": "earliest"})
 
 	if err != nil {
 		fmt.Printf("Failed to create consumer: %s", err)
@@ -32,17 +29,16 @@ func main() {
 	}
 
 	topic := "mytopic"
-	c.SubscribeTopics([]string{topic}, nil)
-
+	err = c.SubscribeTopics([]string{topic}, nil)
 	sigchan := make(chan os.Signal, 1)
 	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
 
-	for {
+	run := true
+	for run {
 		select {
 		case sig := <-sigchan:
 			fmt.Printf("Caught signal %v: terminating\n", sig)
-			c.Close()
-			return
+			run = false
 		default:
 			ev, err := c.ReadMessage(100 * time.Millisecond)
 			if err != nil {
@@ -52,13 +48,7 @@ func main() {
 				*ev.TopicPartition.Topic, string(ev.Key), string(ev.Value))
 		}
 	}
-}
 
-func ReadConfig() kafka.ConfigMap {
-
-	m := make(map[string]kafka.ConfigValue)
-
-	m["bootstrap.servers"] = "kafka-service:9092"
-	return m
+	c.Close()
 
 }
