@@ -16,6 +16,11 @@ spec:
       containers:  
       - name: consumer-container
         image: angegt3/golang-consumer
+        env:
+        - name: REDIS_HOST
+          value: "redis.monitoring.svc.cluster.local"
+        - name: REDIS_AUTH
+          value: "YOUR_PASSWORD"
         ports:  
         - containerPort: 3002  
           protocol: TCP  

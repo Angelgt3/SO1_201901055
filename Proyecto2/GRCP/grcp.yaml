@@ -21,7 +21,9 @@ spec:
       - name: contenedor2
         image: angegt3/servidor_grcp  
         ports: 
+        - containerPort: 3000
         - containerPort: 3001
+        
 
 
 ---

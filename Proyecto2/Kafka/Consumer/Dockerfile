@@ -10,4 +10,7 @@ RUN go build -o /go/bin/app
 
 FROM gcr.io/distroless/base-debian12
 COPY --from=build /go/bin/app /
+
+EXPOSE 3000
+
 CMD ["/app"]

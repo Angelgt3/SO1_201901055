@@ -12,6 +12,10 @@ docker build -t golang-consumer .
 docker tag golang-consumer angegt3/golang-consumer
 docker push angegt3/golang-consumer
 
+docker build -t cliente-grafana .
+docker tag cliente-grafana angegt3/cliente-grafana
+docker push angegt3/cliente-grafana
+angegt3/cliente-grafana
 
 
 #GRPC
