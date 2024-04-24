@@ -93,12 +93,12 @@ func processAndUpdateRedis(ctx context.Context, rdb *redis.Client, data string) 
 	// Clave del hash en Redis
 	hashKey := fmt.Sprintf("%s:%s:%s", name, album, year)
 
-	// Actualizar el contador de votos en Redis utilizando HINCRBY
-	err := rdb.HIncrBy(ctx, hashKey, "votes", 1).Err()
+	// Actualizar el contador de votos en Redis
+	err := rdb.HIncrBy(ctx, "albums", hashKey, 1).Err()
 	if err != nil {
 		return err
 	}
 
-	fmt.Printf("Se agregó 1 voto para %s - %s (%s)\n", name, album, year)
+	fmt.Printf("Se agregó albums:" + album + " hashkey: " + hashKey)
 	return nil
 }

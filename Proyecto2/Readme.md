@@ -24,7 +24,7 @@ locust -f traffic.py
 gcloud container clusters get-credentials proyecto2 --location us-centra1l-c
 kubectl create namespace so1
 
-    kubectl get pods -n so1
+kubectl get pods -n so1
 kubectl get deployments -n so1
 kubectl get services -n so1
 
@@ -35,4 +35,5 @@ kubectl port-forward -n monitoring --address 0.0.0.0 svc/grafana 3000:3000
 
 kubectl logs deploy/consumer-deployment -n so1 -f
 
-kubectl exec -it redis-6fbbbc7b97-dg7d9 -n monitoring -- redis-cli -a YOUR_PASSWORD
+kubectl get pods -n monitoring
+kubectl exec -it redis-6fbbbc7b97-z7r7g -n monitoring -- redis-cli -a YOUR_PASSWORD
