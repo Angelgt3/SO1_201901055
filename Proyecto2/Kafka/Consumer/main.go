@@ -3,10 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
-	"math/rand"
 	"os"
 	"os/signal"
-	"strconv"
+	"strings"
 	"syscall"
 	"time"
 
@@ -72,21 +71,43 @@ func main() {
 					*ev.TopicPartition.Topic, string(ev.Key), string(ev.Value))
 
 				// Actualizar datos en Redis
-				team := rand.Intn(2) + 1
-				err = rdb.HIncrBy(ctx, "teams", "team"+strconv.Itoa(team), 1).Err()
+				err = processAndUpdateRedis(ctx, rdb, string(ev.Value))
 				if err != nil {
-					panic(err)
+					fmt.Printf("Failed to process and update Redis: %s\n", err)
 				}
-				err = rdb.Incr(ctx, "total").Err()
-				if err != nil {
-					panic(err)
-				}
-				fmt.Fprintf(os.Stderr, "%v\n", map[string]int{"team" + strconv.Itoa(team): 1})
-				time.Sleep(300 * time.Millisecond)
 			}
 		}
 	}()
 
 	// Mantener el programa en ejecución
 	<-sigchan
+}
+
+func processAndUpdateRedis(ctx context.Context, rdb *redis.Client, data string) error {
+	// Procesar la cadena de datos para extraer los valores
+	values := strings.Split(data, ", ")
+	year := strings.Split(values[0], ": ")[1]
+	album := strings.Split(values[1], ": ")[1]
+	artist := strings.Split(values[2], ": ")[1]
+	ranked := strings.Split(values[3], ": ")[1]
+
+	// Actualizar los valores en Redis
+	err := rdb.HIncrBy(ctx, "albums:"+album, "total", 1).Err()
+	if err != nil {
+		return err
+	}
+	err = rdb.HIncrBy(ctx, "albums:"+album, "year:"+year, 1).Err()
+	if err != nil {
+		return err
+	}
+	err = rdb.HIncrBy(ctx, "albums:"+album, "artist:"+artist, 1).Err()
+	if err != nil {
+		return err
+	}
+	err = rdb.HIncrBy(ctx, "albums:"+album, "ranked:"+ranked, 1).Err()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
