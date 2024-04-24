@@ -36,3 +36,5 @@ kubectl expose deployment grpc-deployment --type=LoadBalancer --port 3000 -n so1
 
 #grafana
 kubectl port-forward -n monitoring --address 0.0.0.0 svc/grafana 3000:3000
+
+kubectl logs deploy/consumer-deployment -n so1 -f
