@@ -14,10 +14,10 @@ import (
 var ctx = context.Background()
 
 type Data struct {
-	Album  string
-	Year   string
-	Artist string
-	Ranked string
+	Name  string
+	Album string
+	Year  string
+	Rank  string
 }
 
 func insertData(c *fiber.Ctx) error {
@@ -28,10 +28,10 @@ func insertData(c *fiber.Ctx) error {
 	}
 
 	rank := Data{
-		Album:  data["album"],
-		Year:   data["year"],
-		Artist: data["artist"],
-		Ranked: data["ranked"],
+		Name:  data["name"],
+		Album: data["album"],
+		Year:  data["year"],
+		Rank:  data["rank"],
 	}
 
 	conn, err := grpc.Dial("localhost:3001", grpc.WithTransportCredentials(insecure.NewCredentials()),
@@ -49,10 +49,10 @@ func insertData(c *fiber.Ctx) error {
 	}(conn)
 
 	ret, err := cl.ReturnInfo(ctx, &pb.RequestId{
-		Artist: rank.Artist,
-		Album:  rank.Album,
-		Year:   rank.Year,
-		Ranked: rank.Ranked,
+		Name:  rank.Name,
+		Album: rank.Album,
+		Year:  rank.Year,
+		Rank:  rank.Rank,
 	})
 	if err != nil {
 		log.Fatalln(err)

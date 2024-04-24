@@ -86,10 +86,10 @@ func main() {
 func processAndUpdateRedis(ctx context.Context, rdb *redis.Client, data string) error {
 	// Procesar la cadena de datos para extraer los valores
 	values := strings.Split(data, ", ")
-	year := strings.Split(values[0], ": ")[1]
+	name := strings.Split(values[0], ": ")[1]
 	album := strings.Split(values[1], ": ")[1]
-	artist := strings.Split(values[2], ": ")[1]
-	ranked := strings.Split(values[3], ": ")[1]
+	year := strings.Split(values[2], ": ")[1]
+	rank := strings.Split(values[3], ": ")[1]
 
 	// Actualizar los valores en Redis
 	err := rdb.HIncrBy(ctx, "albums:"+album, "total", 1).Err()
@@ -100,14 +100,14 @@ func processAndUpdateRedis(ctx context.Context, rdb *redis.Client, data string) 
 	if err != nil {
 		return err
 	}
-	err = rdb.HIncrBy(ctx, "albums:"+album, "artist:"+artist, 1).Err()
+	err = rdb.HIncrBy(ctx, "albums:"+album, "name:"+name, 1).Err()
 	if err != nil {
 		return err
 	}
-	err = rdb.HIncrBy(ctx, "albums:"+album, "ranked:"+ranked, 1).Err()
+	err = rdb.HIncrBy(ctx, "albums:"+album, "rank:"+rank, 1).Err()
 	if err != nil {
 		return err
 	}
-
+	fmt.Println("Se agrego album:" + album + " year:" + year + " name:" + name + " rank:" + rank)
 	return nil
 }

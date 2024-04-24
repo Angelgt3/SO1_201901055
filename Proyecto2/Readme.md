@@ -1,4 +1,5 @@
 #Comandos
+docker build -t backend-semi1 .
 #Docker
 docker build -t cliente_grcp .
 docker tag cliente_grcp angegt3/cliente_grcp
@@ -11,11 +12,6 @@ docker push angegt3/servidor_grcp
 docker build -t golang-consumer .
 docker tag golang-consumer angegt3/golang-consumer
 docker push angegt3/golang-consumer
-
-docker build -t cliente-grafana .
-docker tag cliente-grafana angegt3/cliente-grafana
-docker push angegt3/cliente-grafana
-angegt3/cliente-grafana
 
 
 #GRPC
@@ -38,3 +34,6 @@ kubectl expose deployment grpc-deployment --type=LoadBalancer --port 3000 -n so1
 kubectl port-forward -n monitoring --address 0.0.0.0 svc/grafana 3000:3000
 
 kubectl logs deploy/consumer-deployment -n so1 -f
+
+kubectl exec -it redis-6fbbbc7b97-fdlbl -n monitoring -- redis-cli
+kubectl exec -it redis-6fbbbc7b97-fdlbl -n monitoring -- redis-cli -a YOUR_PASSWORD

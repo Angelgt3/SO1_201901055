@@ -49,8 +49,8 @@ func produceToKafka(data string) error {
 }
 
 func (s *server) ReturnInfo(ctx context.Context, in *pb.RequestId) (*pb.ReplyInfo, error) {
-	fmt.Println("Recibí de cliente: ", in.GetArtist())
-	data := fmt.Sprintf("Year: %s, Album: %s, Artist: %s, Ranked: %s", in.GetYear(), in.GetAlbum(), in.GetArtist(), in.GetRanked())
+	fmt.Println("Recibí de cliente: ", in.GetName())
+	data := fmt.Sprintf("Name: %s, Album: %s, Year: %s, Rank: %s", in.GetName(), in.GetAlbum(), in.GetYear(), in.GetRank())
 	fmt.Println(data)
 
 	err := produceToKafka(data)
