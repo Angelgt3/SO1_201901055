@@ -89,25 +89,16 @@ func processAndUpdateRedis(ctx context.Context, rdb *redis.Client, data string) 
 	name := strings.Split(values[0], ": ")[1]
 	album := strings.Split(values[1], ": ")[1]
 	year := strings.Split(values[2], ": ")[1]
-	rank := strings.Split(values[3], ": ")[1]
 
-	// Actualizar los valores en Redis
-	err := rdb.HIncrBy(ctx, "albums:"+album, "total", 1).Err()
+	// Clave del hash en Redis
+	hashKey := fmt.Sprintf("%s:%s:%s", name, album, year)
+
+	// Actualizar el contador de votos en Redis utilizando HINCRBY
+	err := rdb.HIncrBy(ctx, hashKey, "votes", 1).Err()
 	if err != nil {
 		return err
 	}
-	err = rdb.HIncrBy(ctx, "albums:"+album, "year:"+year, 1).Err()
-	if err != nil {
-		return err
-	}
-	err = rdb.HIncrBy(ctx, "albums:"+album, "name:"+name, 1).Err()
-	if err != nil {
-		return err
-	}
-	err = rdb.HIncrBy(ctx, "albums:"+album, "rank:"+rank, 1).Err()
-	if err != nil {
-		return err
-	}
-	fmt.Println("Se agrego album:" + album + " year:" + year + " name:" + name + " rank:" + rank)
+
+	fmt.Printf("Se agregó 1 voto para %s - %s (%s)\n", name, album, year)
 	return nil
 }
