@@ -36,4 +36,4 @@ kubectl port-forward -n monitoring --address 0.0.0.0 svc/grafana 3000:3000
 kubectl logs deploy/consumer-deployment -n so1 -f
 
 kubectl get pods -n monitoring
-kubectl exec -it redis-6fbbbc7b97-z7r7g -n monitoring -- redis-cli -a YOUR_PASSWORD
+kubectl exec -it redis-6fbbbc7b97-c5nc7 -n monitoring -- redis-cli -a YOUR_PASSWORD
