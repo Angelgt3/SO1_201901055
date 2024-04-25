@@ -11,6 +11,8 @@ import (
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/go-redis/redis/v8"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type Data struct {
@@ -18,6 +20,10 @@ type Data struct {
 	Year   string `json:"Year"`
 	Artist string `json:"Artist"`
 	Ranked string `json:"Ranked"`
+}
+
+type Log struct {
+	Data string `bson:"data"`
 }
 
 func main() {
@@ -43,6 +49,25 @@ func main() {
 		DB:       0,
 	})
 
+	// Configuración de MongoDB
+	mongoURI := "mongodb://admin:password@mongodb.mongospace:27017"
+	client, err := mongo.NewClient(options.Client().ApplyURI(mongoURI))
+	if err != nil {
+		fmt.Printf("Failed to create MongoDB client: %s", err)
+		os.Exit(1)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	err = client.Connect(ctx)
+	if err != nil {
+		fmt.Printf("Failed to connect to MongoDB: %s", err)
+		os.Exit(1)
+	}
+	defer client.Disconnect(ctx)
+
+	database := client.Database("mydatabase")
+	logCollection := database.Collection("logs")
+
 	topic := "mytopic"
 	err = c.SubscribeTopics([]string{topic}, nil)
 	if err != nil {
@@ -53,7 +78,7 @@ func main() {
 	sigchan := make(chan os.Signal, 1)
 	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
 
-	// Función para consumir mensajes de Kafka y actualizar Redis
+	// Función para consumir mensajes de Kafka,  actualizar Redis y insertar mongo
 	go func() {
 		for {
 			select {
@@ -75,6 +100,13 @@ func main() {
 				if err != nil {
 					fmt.Printf("Failed to process and update Redis: %s\n", err)
 				}
+
+				// Insertar log en MongoDB
+				err = insertLog(ctx, logCollection, string(ev.Value))
+				if err != nil {
+					fmt.Printf("Failed to insert log into MongoDB: %s\n", err)
+				}
+
 			}
 		}
 	}()
@@ -100,5 +132,26 @@ func processAndUpdateRedis(ctx context.Context, rdb *redis.Client, data string) 
 	}
 
 	fmt.Printf("Se agregó albums:" + album + " hashkey: " + hashKey)
+	return nil
+}
+
+func insertLog(ctx context.Context, collection *mongo.Collection, data string) error {
+	// Procesar la cadena de datos para extraer los valores
+	values := strings.Split(data, ", ")
+	name := strings.Split(values[0], ": ")[1]
+	album := strings.Split(values[1], ": ")[1]
+	year := strings.Split(values[2], ": ")[1]
+	rank := strings.Split(values[3], ": ")[1]
+	data = "ALbum: " + album + " Name: " + name + " year: " + year + " rank: " + rank
+	log := Log{
+		Data: data,
+	}
+
+	_, err := collection.InsertOne(ctx, log)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("Log insertado en MongoDB: " + data)
 	return nil
 }
