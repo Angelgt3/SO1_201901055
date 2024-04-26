@@ -4,44 +4,28 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config();
 
-
 const app = express();
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 // Conexión a MongoDB
-mongoose.connect("mongodb://admin:password@35.193.151.240:27017/proyecto2", {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
 .then(() => console.log('MongoDB conectado'))
 .catch(err => console.log(err));
 
-
-// Definición de un modelo de logs
+// Definición del modelo de logs
 const LogSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now }, 
   data: String
 });
 const Log = mongoose.model('Log', LogSchema);
 
-// Ruta para guardar un nuevo log
-app.post('/logs', async (req, res) => {
-  try {
-    const { data } = req.body; 
-    const log = new Log({ data }); 
-    await log.save(); 
-    res.status(201).json({ message: 'Log creado exitosamente' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Error' });
-  }
-});
-
-
+// Ruta para obtener los registros de logs
 app.get('/logs', async (req, res) => {
   try {
     const logs = await Log.find().sort({ date: -1 }).limit(20); 
