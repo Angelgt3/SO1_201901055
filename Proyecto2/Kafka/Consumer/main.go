@@ -12,7 +12,6 @@ import (
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/go-redis/redis/v8"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type Data struct {
@@ -48,27 +47,26 @@ func main() {
 		Password: rauth,
 		DB:       0,
 	})
+	/*
+		// Configuración de MongoDB
+		mongoURI := "mongodb://admin:password@mongodb.mongospace:27017"
+		client, err := mongo.NewClient(options.Client().ApplyURI(mongoURI))
+		if err != nil {
+			fmt.Printf("Failed to create MongoDB client: %s", err)
+			os.Exit(1)
+		}
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+		err = client.Connect(ctx)
+		if err != nil {
+			fmt.Printf("Failed to connect to MongoDB: %s", err)
+			os.Exit(1)
+		}
+		defer client.Disconnect(ctx)
 
-	// Configuración de MongoDB
-	mongoURI := "mongodb://admin:password@35.193.151.240:27017"
-
-	client, err := mongo.NewClient(options.Client().ApplyURI(mongoURI))
-	if err != nil {
-		fmt.Printf("Failed to create MongoDB client: %s", err)
-		os.Exit(1)
-	}
-	ctx2, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
-	err = client.Connect(ctx2)
-	if err != nil {
-		fmt.Printf("Failed to connect to MongoDB: %s", err)
-		os.Exit(1)
-	}
-	defer client.Disconnect(ctx2)
-
-	database := client.Database("")
-	logCollection := database.Collection("logs")
-
+		database := client.Database("mydatabase")
+		logCollection := database.Collection("logs")
+	*/
 	topic := "mytopic"
 	err = c.SubscribeTopics([]string{topic}, nil)
 	if err != nil {
@@ -101,12 +99,13 @@ func main() {
 				if err != nil {
 					fmt.Printf("Failed to process and update Redis: %s\n", err)
 				}
-
-				// Insertar log en MongoDB
-				err = insertLog(ctx2, logCollection, string(ev.Value))
-				if err != nil {
-					fmt.Printf("Failed to insert log into MongoDB: %s\n", err)
-				}
+				/*
+					// Insertar log en MongoDB
+					err = insertLog(ctx, logCollection, string(ev.Value))
+					if err != nil {
+						fmt.Printf("Failed to insert log into MongoDB: %s\n", err)
+					}
+				*/
 
 			}
 		}
@@ -136,7 +135,7 @@ func processAndUpdateRedis(ctx context.Context, rdb *redis.Client, data string) 
 	return nil
 }
 
-func insertLog(ctx2 context.Context, collection *mongo.Collection, data string) error {
+func insertLog(ctx context.Context, collection *mongo.Collection, data string) error {
 	// Procesar la cadena de datos para extraer los valores
 	values := strings.Split(data, ", ")
 	name := strings.Split(values[0], ": ")[1]
@@ -148,7 +147,7 @@ func insertLog(ctx2 context.Context, collection *mongo.Collection, data string) 
 		Data: data,
 	}
 
-	_, err := collection.InsertOne(ctx2, log)
+	_, err := collection.InsertOne(ctx, log)
 	if err != nil {
 		return err
 	}
