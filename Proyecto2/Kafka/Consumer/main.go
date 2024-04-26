@@ -11,7 +11,6 @@ import (
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/go-redis/redis/v8"
-	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -51,7 +50,7 @@ func main() {
 	})
 
 	// Configuración de MongoDB
-	mongoURI := "mongodb://admin:password@mongodb.mongospace:27017"
+	mongoURI := "mongodb://admin:password@35.193.151.240:27017"
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(mongoURI))
 	if err != nil {
@@ -67,8 +66,8 @@ func main() {
 	}
 	defer client.Disconnect(ctx)
 
-	// Colección de logs en la base de datos predeterminada "test"
-	logCollection := client.Database("").Collection("logs")
+	database := client.Database("mydatabase")
+	logCollection := database.Collection("logs")
 
 	topic := "mytopic"
 	err = c.SubscribeTopics([]string{topic}, nil)
@@ -80,7 +79,7 @@ func main() {
 	sigchan := make(chan os.Signal, 1)
 	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
 
-	// Función para consumir mensajes de Kafka, actualizar Redis e insertar en MongoDB
+	// Función para consumir mensajes de Kafka,  actualizar Redis y insertar mongo
 	go func() {
 		for {
 			select {
@@ -145,12 +144,11 @@ func insertLog(ctx context.Context, collection *mongo.Collection, data string) e
 	year := strings.Split(values[2], ": ")[1]
 	rank := strings.Split(values[3], ": ")[1]
 	data = "ALbum: " + album + " Name: " + name + " year: " + year + " rank: " + rank
+	log := Log{
+		Data: data,
+	}
 
-	// Crear un registro en MongoDB en la colección logs de la base de datos predeterminada "test"
-	_, err := collection.InsertOne(ctx, bson.M{
-		"data": data,
-		"date": time.Now(),
-	})
+	_, err := collection.InsertOne(ctx, log)
 	if err != nil {
 		return err
 	}
