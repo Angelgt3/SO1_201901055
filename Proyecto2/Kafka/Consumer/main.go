@@ -57,16 +57,16 @@ func main() {
 		fmt.Printf("Failed to create MongoDB client: %s", err)
 		os.Exit(1)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx2, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	err = client.Connect(ctx)
+	err = client.Connect(ctx2)
 	if err != nil {
 		fmt.Printf("Failed to connect to MongoDB: %s", err)
 		os.Exit(1)
 	}
-	defer client.Disconnect(ctx)
+	defer client.Disconnect(ctx2)
 
-	database := client.Database("mydatabase")
+	database := client.Database("")
 	logCollection := database.Collection("logs")
 
 	topic := "mytopic"
@@ -103,7 +103,7 @@ func main() {
 				}
 
 				// Insertar log en MongoDB
-				err = insertLog(ctx, logCollection, string(ev.Value))
+				err = insertLog(ctx2, logCollection, string(ev.Value))
 				if err != nil {
 					fmt.Printf("Failed to insert log into MongoDB: %s\n", err)
 				}
@@ -136,7 +136,7 @@ func processAndUpdateRedis(ctx context.Context, rdb *redis.Client, data string) 
 	return nil
 }
 
-func insertLog(ctx context.Context, collection *mongo.Collection, data string) error {
+func insertLog(ctx2 context.Context, collection *mongo.Collection, data string) error {
 	// Procesar la cadena de datos para extraer los valores
 	values := strings.Split(data, ", ")
 	name := strings.Split(values[0], ": ")[1]
@@ -148,7 +148,7 @@ func insertLog(ctx context.Context, collection *mongo.Collection, data string) e
 		Data: data,
 	}
 
-	_, err := collection.InsertOne(ctx, log)
+	_, err := collection.InsertOne(ctx2, log)
 	if err != nil {
 		return err
 	}
