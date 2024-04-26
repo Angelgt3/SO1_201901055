@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 // Conexión a MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect("mongodb://admin:password@35.193.151.240:27017/proyecto2", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })

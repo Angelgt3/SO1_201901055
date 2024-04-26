@@ -50,7 +50,7 @@ func main() {
 	})
 
 	// Configuración de MongoDB
-	mongoURI := "mongodb://admin:password@mongodb.mongospace:27017"
+	mongoURI := "mongodb://admin:password@35.193.151.240:27017"
 	client, err := mongo.NewClient(options.Client().ApplyURI(mongoURI))
 	if err != nil {
 		fmt.Printf("Failed to create MongoDB client: %s", err)
@@ -65,7 +65,7 @@ func main() {
 	}
 	defer client.Disconnect(ctx)
 
-	database := client.Database("mydatabase")
+	database := client.Database("proyecto2")
 	logCollection := database.Collection("logs")
 
 	topic := "mytopic"
