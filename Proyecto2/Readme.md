@@ -13,6 +13,14 @@ docker build -t golang-consumer .
 docker tag golang-consumer angegt3/golang-consumer
 docker push angegt3/golang-consumer
 
+docker build -t backend-cloudrun .
+docker push angegt3/backend-cloudrun
+docker pull angegt3/backend-cloudrun
+
+
+docker tag angegt3/backend-cloudrun gcr.io/so1-421118/backend-cloudrun
+docker push gcr.io/so1-421118/backend-cloudrun
+
 
 #GRPC
 protoc --go_out=. --go-grpc_out=. cliente.proto
@@ -41,5 +49,7 @@ kubectl exec -it redis-6fbbbc7b97-c5nc7 -n monitoring -- redis-cli -a YOUR_PASSW
 
 #MONGO
 kubectl get pods -n mongospace
-kubectl exec -it <nombre-del-pod> -n mongospace -- /bin/bash
+kubectl exec -it mongodb-7bcb659766-fqd7s -n mongospace -- /bin/bash
 mongo -u admin -p password
+
+mongo --host 10.100.13.216  --port 27017 -u admin -p password --authenticationDatabase admin
