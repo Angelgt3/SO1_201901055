@@ -1,0 +1,16 @@
+    FROM rust:latest as builder
+
+    WORKDIR /usr/src/app
+
+    COPY . .
+
+    RUN cargo build --release
+
+    FROM debian:buster-slim
+
+    COPY --from=builder /usr/src/app/target/release/rust_servidor /usr/local/bin/
+
+    EXPOSE 3000
+    EXPOSE 3001
+
+    CMD ["rust_servidor"]

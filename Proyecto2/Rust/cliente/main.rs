@@ -1,45 +1,50 @@
-use actix_web::{web, App, HttpServer, HttpResponse, Responder};
-use serde::{Deserialize, Serialize};
+use rocket::{serde::json::Json};
+use rocket::post;
 use reqwest::Client;
+use serde::{Deserialize, Serialize};
+use rocket::config::SecretKey;
+use rocket_cors::{AllowedOrigins, CorsOptions};
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 struct Data {
+    name: String,
     album: String,
     year: String,
-    artist: String,
-    ranked: String,
+    rank: String,
 }
 
-async fn insert_data(data: web::Json<Data>) -> impl Responder {
-    println!("Data: {:?}", data);
+#[post("/insert", data = "<data>")]
+async fn insert(data: Json<Data>) -> String {
+    let client = Client::new();
+    let server_url = "http://localhost:3001"; 
+    let response = client.post(server_url).json(&data.into_inner()).send().await;
 
-    let url = "http://localhost:3001"; 
-
-    let json_data = serde_json::to_string(&data.into_inner()).unwrap();
-
-    match Client::new().post(url)
-        .header("Content-Type", "application/json")
-        .body(json_data)
-        .send()
-        .await {
-        Ok(response) => {
-            println!("Response: {:?}", response);
-            HttpResponse::Ok().body("Successful POST request")
-        },
-        Err(err) => {
-            println!("Error sending request: {:?}", err);
-            HttpResponse::InternalServerError().body("Error sending POST request")
-        }
+    match response {
+        Ok(_) => "Data sent successfully!".to_string(),
+        Err(e) => format!("Failed to send data: {}", e),
     }
 }
 
-#[actix_web::main]
-async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| {
-        App::new()
-            .service(web::resource("/insert").route(web::post().to(insert_data)))
-    })
-    .bind("127.0.0.1:3000")?
-    .run()
+#[rocket::main]
+async fn main() {
+    let secret_key = SecretKey::generate(); 
+
+    let cors = CorsOptions::default()
+        .allowed_origins(AllowedOrigins::all())
+        .to_cors()
+        .expect("failed to create CORS fairing");
+
+    let config = rocket::Config {
+        address: "0.0.0.0".parse().unwrap(),
+        port: 3000,
+        secret_key: secret_key.unwrap(),
+        ..rocket::Config::default()
+    };
+    
+    rocket::custom(config)
+    .attach(cors)
+    .mount("/", rocket::routes![insert])
+    .launch()
     .await
+    .unwrap();
 }

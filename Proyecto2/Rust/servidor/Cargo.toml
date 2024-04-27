@@ -1,16 +1,18 @@
 [package]
-name = "rust_cliente"
+name = "rust_servidor"
 version = "0.1.0"
 edition = "2021"
 
-# Dependencias del proyecto
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
 [dependencies]
 rocket = { version = "0.5.0-rc.1", features = ["secrets", "tls", "json"] }
 rocket_cors = "0.6.0"
 serde = { version = "1.0", features = ["derive"] }
 tokio = { version = "1", features = ["full"] }
 reqwest = { version = "0.12.3", features = ["json"] }
+serde_json = "1.0"
 
 [[bin]]      # Definición del ejecutable
-name = "rust_cliente"
+name = "rust_servidor"
 path = "main.rs"
