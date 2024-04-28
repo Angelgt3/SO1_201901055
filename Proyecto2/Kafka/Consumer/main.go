@@ -47,26 +47,26 @@ func main() {
 		Password: rauth,
 		DB:       0,
 	})
-	/*
-		// Configuración de MongoDB
-		mongoURI := "mongodb://admin:password@mongodb.mongospace:27017"
-		client, err := mongo.NewClient(options.Client().ApplyURI(mongoURI))
-		if err != nil {
-			fmt.Printf("Failed to create MongoDB client: %s", err)
-			os.Exit(1)
-		}
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-		defer cancel()
-		err = client.Connect(ctx)
-		if err != nil {
-			fmt.Printf("Failed to connect to MongoDB: %s", err)
-			os.Exit(1)
-		}
-		defer client.Disconnect(ctx)
+	
+	// Configuración de MongoDB
+	mongoURI := "mongodb://admin:password@mongodb.mongospace:27017"
+	client, err := mongo.NewClient(options.Client().ApplyURI(mongoURI))
+	if err != nil {
+		fmt.Printf("Failed to create MongoDB client: %s", err)
+		os.Exit(1)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	err = client.Connect(ctx)
+	if err != nil {
+		fmt.Printf("Failed to connect to MongoDB: %s", err)
+		os.Exit(1)
+	}
+	defer client.Disconnect(ctx)
 
-		database := client.Database("mydatabase")
-		logCollection := database.Collection("logs")
-	*/
+	database := client.Database("")
+	logCollection := database.Collection("logs")
+
 	topic := "mytopic"
 	err = c.SubscribeTopics([]string{topic}, nil)
 	if err != nil {
@@ -99,13 +99,13 @@ func main() {
 				if err != nil {
 					fmt.Printf("Failed to process and update Redis: %s\n", err)
 				}
-				/*
-					// Insertar log en MongoDB
-					err = insertLog(ctx, logCollection, string(ev.Value))
-					if err != nil {
-						fmt.Printf("Failed to insert log into MongoDB: %s\n", err)
-					}
-				*/
+				
+				// Insertar log en MongoDB
+				err = insertLog(ctx, logCollection, string(ev.Value))
+				if err != nil {
+					fmt.Printf("Failed to insert log into MongoDB: %s\n", err)
+				}
+				
 
 			}
 		}
